@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformBounce : MonoBehaviour
+public class PlatformDestroyer : MonoBehaviour
 {
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,11 +18,8 @@ public class PlatformBounce : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<Rigidbody2D>().velocity.y <= 0)
-        {
-            other.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 600);
-        }
+        if (other.gameObject.CompareTag("Platform")) Destroy(other.gameObject);
     }
 }
