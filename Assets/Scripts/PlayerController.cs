@@ -41,10 +41,7 @@ public class PlayerController : MonoBehaviour
     {
         _moveInput = Input.GetAxis("Horizontal");
 
-        if (_rigidBody2D.velocity.y == 0)
-            _isJumping = false;
-        else
-            _isJumping = true;
+        _isJumping = Math.Abs(_rigidBody2D.velocity.y) > 0;
 
         if (!_isJumping) _canDoubleJump = true;
 

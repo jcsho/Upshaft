@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
+
+    [SerializeField]
+    private int _moveSpeed;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -14,10 +18,11 @@ public class Platform : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       transform.Translate(Vector2.down * (_moveSpeed * Time.deltaTime));
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    public void SetSpeed(int amount)
     {
+        _moveSpeed = amount;
     }
 }
