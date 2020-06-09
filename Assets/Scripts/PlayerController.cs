@@ -26,23 +26,34 @@ public class PlayerController : MonoBehaviour
     private float _moveInput;
     private bool _isJumping;
     private bool _canDoubleJump;
-    
+    private Weapon _weapon;
+
     // Start is called before the first frame update
     void Start()
     {
         _rigidBody2D = GetComponent<Rigidbody2D>();
         _isJumping = false;
         _canDoubleJump = false;
+        _weapon = GetComponent<Weapon>();
     }
 
     private void Update()
     {
        Movement(); 
+       FireWeapon();
     }
 
     void FixedUpdate()
     {
         PhysicsMovement();
+    }
+
+    private void FireWeapon()
+    {
+        if (!_isJumping && _canDoubleJump && Input.GetButtonDown("Jump") /* && if weapon powerup equipped */)
+        {
+            _weapon.Shoot();
+        }
     }
 
     private void Movement()
