@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
        Movement(); 
-       FireWeapon();
     }
 
     void FixedUpdate()
@@ -50,26 +49,24 @@ public class PlayerController : MonoBehaviour
 
     private void FireWeapon()
     {
-        if (!_isJumping && _canDoubleJump && Input.GetButtonDown("Jump") /* && if weapon powerup equipped */)
-        {
-            _weapon.Shoot();
-        }
+        // check if weapon powerup enabled
+        _weapon.Shoot();
     }
 
     private void Movement()
     {
         _moveInput = Input.GetAxis("Horizontal");
         
-        if (!_isJumping) _canDoubleJump = true;
-
         if (!_isJumping && Input.GetButtonDown("Jump"))
         {
             Jump(jumpForce);
+            _canDoubleJump = true;
         }
         else if (_canDoubleJump && Input.GetButtonDown("Jump"))
         {
             Jump(jumpForce * 0.85f);
             _canDoubleJump = false;
+            FireWeapon();
         }
     }
 
@@ -79,8 +76,9 @@ public class PlayerController : MonoBehaviour
         _rigidBody2D.velocity = new Vector2(_moveInput * moveSpeed, _rigidBody2D.velocity.y);
 
         // check if the character is on a platform
+        // TODO - use circle cast to cover entire bottom area of character
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, tolerance, groundLayer);
-        _isJumping = hit.collider != null;
+        _isJumping = hit.collider == null;
     }
 
     private void Jump(float jumpAmount)
