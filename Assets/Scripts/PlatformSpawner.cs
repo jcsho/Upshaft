@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class PlatformSpawner : MonoBehaviour
 {
@@ -9,6 +11,8 @@ public class PlatformSpawner : MonoBehaviour
     public Platform platformPrefab;
 
     public Vector2 spawnPosition;
+
+    public float spawnPositionTolerance;
 
     public int platformSpeed;
 
@@ -35,7 +39,17 @@ public class PlatformSpawner : MonoBehaviour
 
     private void SpawnPlatform()
     {
-        Platform platform = Instantiate(platformPrefab, spawnPosition, Quaternion.identity);
+        Vector2 spawnLocation = new Vector2(Random.Range(spawnPosition.x - spawnPositionTolerance, spawnPosition.x + spawnPositionTolerance), spawnPosition.y);
+        Platform platform = Instantiate(platformPrefab, spawnLocation, Quaternion.identity);
         platform.SetSpeed(platformSpeed);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        // draw spawn position tolerance
+       Gizmos.color = Color.green;
+       Vector3 toleranceStart = new Vector3(spawnPosition.x - spawnPositionTolerance, spawnPosition.y, 0);
+       Vector3 toleranceEnd = new Vector3(spawnPosition.x + spawnPositionTolerance, spawnPosition.y, 0);
+       Gizmos.DrawLine(toleranceStart, toleranceEnd);
     }
 }
