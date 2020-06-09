@@ -8,17 +8,19 @@ public class Platform : MonoBehaviour
 
     [SerializeField]
     private int _moveSpeed;
+
+    private Rigidbody2D _rigidBody2D;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        _rigidBody2D = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void FixedUpdate()
     {
-       transform.Translate(Vector2.down * (_moveSpeed * Time.deltaTime));
+        _rigidBody2D.velocity = Vector2.down * _moveSpeed;
     }
 
     public void SetSpeed(int amount)
