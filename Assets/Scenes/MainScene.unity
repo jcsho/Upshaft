@@ -454,10 +454,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformPrefab: {fileID: 5602217502430966303, guid: 0e4cfb3323e44fea5974861d80eeabfe,
     type: 3}
+  coinPrefab: {fileID: 4967581631343417129, guid: 238044dffbdc7845dac8da30c1dd1d3d,
+    type: 3}
   spawnPosition: {x: 0, y: 10}
   spawnPositionTolerance: 4
   platformSpeed: 2
-  spawnInterval: 3
+  platformSpawnInterval: 2
+  coinSpawnInterval: 2
 --- !u!4 &1497798488
 Transform:
   m_ObjectHideFlags: 0

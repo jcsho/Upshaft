@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
 
     private void PhysicsMovement()
     {
-        float moveSpeed = _isJumping ? speed * 0.5f : speed;
+        float moveSpeed = _isJumping ? speed * 0.8f : speed;
         _rigidBody2D.velocity = new Vector2(_moveInput * moveSpeed, _rigidBody2D.velocity.y);
 
         // check if the character is on a platform

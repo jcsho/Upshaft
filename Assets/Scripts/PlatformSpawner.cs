@@ -10,27 +10,35 @@ public class PlatformSpawner : MonoBehaviour
 
     public Platform platformPrefab;
 
+    public Coin coinPrefab;
+
     public Vector2 spawnPosition;
 
     public float spawnPositionTolerance;
 
     public int platformSpeed;
 
-    public float spawnInterval;
+    [Tooltip("Amount of time between platform spawns (in seconds)")]
+    public float platformSpawnInterval;
+   
+    [Tooltip("Amount of platforms per coin spawn (in platforms)")]
+    public int coinSpawnInterval;
 
     private float _timer;
+    private int _platformSpawnCounter;
     
     // Start is called before the first frame update
     void Start()
     {
         _timer = 0f;
+        _platformSpawnCounter = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
         _timer += Time.deltaTime;
-        if (_timer >= spawnInterval)
+        if (_timer >= platformSpawnInterval)
         {
             SpawnPlatform();
             _timer = 0;
@@ -42,6 +50,16 @@ public class PlatformSpawner : MonoBehaviour
         Vector2 spawnLocation = new Vector2(Random.Range(spawnPosition.x - spawnPositionTolerance, spawnPosition.x + spawnPositionTolerance), spawnPosition.y);
         Platform platform = Instantiate(platformPrefab, spawnLocation, Quaternion.identity);
         platform.SetSpeed(platformSpeed);
+        
+        if (_platformSpawnCounter > coinSpawnInterval)
+        {
+            spawnLocation.y = spawnPosition.y + 1;
+            Coin coin = Instantiate(coinPrefab, spawnLocation, Quaternion.identity);
+            coin.SetSpeed(platformSpeed);
+            _platformSpawnCounter = 0;
+        }
+        
+        _platformSpawnCounter++;
     }
 
     private void OnDrawGizmosSelected()

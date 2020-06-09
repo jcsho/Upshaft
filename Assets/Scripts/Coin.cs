@@ -5,26 +5,31 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    private int _moveSpeed;
+    private Rigidbody2D _rigidBody2D;
+
+    private void Start()
     {
-        
+        _rigidBody2D = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
+        _rigidBody2D.velocity = Vector2.down * _moveSpeed;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
-        Debug.Log("Collided with " + other.name);
         if (other.gameObject.CompareTag("Player"))
         {
             // TODO: add a point
             Destroy(this.gameObject);
         }
+    }
+
+    public void SetSpeed(int amount)
+    {
+        _moveSpeed = amount;
     }
 }
