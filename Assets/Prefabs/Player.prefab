@@ -145,3 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jumpForce: 400
+  tolerance: 0.85
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 2048

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,6 +14,13 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Power of Jump")]
     [Range(400, 1000)]
     public int jumpForce;
+
+    [Space(20)] [Header("Ground Detection")]
+    [Tooltip("Distance to check for ground below the character")]
+    public float tolerance;
+    
+    [Tooltip("Layer to check for ground")]
+    public LayerMask groundLayer;
 
     private Rigidbody2D _rigidBody2D;
     private float _moveInput;
@@ -40,9 +48,7 @@ public class PlayerController : MonoBehaviour
     private void Movement()
     {
         _moveInput = Input.GetAxis("Horizontal");
-
-        _isJumping = Math.Abs(_rigidBody2D.velocity.y) > 0;
-
+        
         if (!_isJumping) _canDoubleJump = true;
 
         if (!_isJumping && Input.GetButtonDown("Jump"))
@@ -60,11 +66,24 @@ public class PlayerController : MonoBehaviour
     {
         float moveSpeed = _isJumping ? speed * 0.5f : speed;
         _rigidBody2D.velocity = new Vector2(_moveInput * moveSpeed, _rigidBody2D.velocity.y);
+
+        // check if the character is on a platform
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, tolerance, groundLayer);
+        _isJumping = hit.collider != null;
     }
 
     private void Jump(float jumpAmount)
     {
         _rigidBody2D.velocity = new Vector2(_rigidBody2D.velocity.x, 0);
         _rigidBody2D.AddForce(Vector2.up * jumpAmount);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        // show ground detection line
+        Gizmos.color = Color.green;
+        Vector3 position = transform.position;
+        Vector3 target = new Vector3(position.x, position.y - tolerance, 0);
+        Gizmos.DrawLine(position, target);
     }
 }
