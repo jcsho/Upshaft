@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,6 +23,12 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Layer to check for ground")]
     public LayerMask groundLayer;
 
+    // Scoring Mechanic Variables
+    // TODO move into separate UI manager
+    public Text scoreText;
+    private float _score;
+    private float _scoreTimer;
+
     private Rigidbody2D _rigidBody2D;
     private float _moveInput;
     private bool _isJumping;
@@ -35,11 +42,33 @@ public class PlayerController : MonoBehaviour
         _isJumping = false;
         _canDoubleJump = false;
         _weapon = GetComponent<Weapon>();
+
+        _score = 0f;
+        _scoreTimer = 0f;
     }
 
     private void Update()
     {
        Movement(); 
+       
+       ScoreCounter();
+    }
+
+    public void IncreaseScore(int amount)
+    {
+        _score += amount;
+    }
+
+    private void ScoreCounter()
+    {
+        _scoreTimer += Time.deltaTime;
+        if (_scoreTimer > 1.0f)
+        {
+            _score++;
+            _scoreTimer = 0;
+        }
+
+        scoreText.text = "Score: " + Mathf.Round(_score);
     }
 
     void FixedUpdate()

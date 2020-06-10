@@ -23,7 +23,8 @@ public class Coin : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            // TODO: add a point
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
+            if (player != null) player.IncreaseScore(10);
             Destroy(this.gameObject);
         }
     }

@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour
 
     public int moveSpeed;
     public float movementTolerance = 2.0f;
+    public PlayerController player;
 
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidBody2D;
@@ -40,6 +41,7 @@ public class EnemyController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Bullet"))
         {
+            player.IncreaseScore(2);
             StartCoroutine(FlashSprite(2, 0.2f));
         }
     }
