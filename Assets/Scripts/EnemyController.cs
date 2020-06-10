@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyController : MonoBehaviour
 {
@@ -43,6 +44,11 @@ public class EnemyController : MonoBehaviour
         {
             player.IncreaseScore(2);
             StartCoroutine(FlashSprite(2, 0.2f));
+        }
+
+        if (other.gameObject.CompareTag("Player"))
+        {
+            SceneManager.LoadScene("MenuScene");
         }
     }
 
