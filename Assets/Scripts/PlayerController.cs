@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     private float _score;
     private float _scoreTimer;
 
+    public PlatformSpawner spawner;
+
     private Rigidbody2D _rigidBody2D;
     private float _moveInput;
     private bool _isJumping;

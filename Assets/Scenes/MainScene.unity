@@ -602,7 +602,8 @@ MonoBehaviour:
     type: 3}
   spawnPosition: {x: 0, y: 10}
   spawnPositionTolerance: 4
-  platformSpeed: 2
+  platformStartSpeed: 4
+  platformRampSpeedRatio: 8
   platformSpawnInterval: 2
   coinSpawnInterval: 2
 --- !u!4 &1497798488
@@ -1029,6 +1030,11 @@ PrefabInstance:
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 1188907714}
+    - target: {fileID: 2243006571890683386, guid: 1a42c497651eebeb5aac0a90dce80bf6,
+        type: 3}
+      propertyPath: spawner
+      value: 
+      objectReference: {fileID: 1497798487}
     - target: {fileID: 2243006571890683391, guid: 1a42c497651eebeb5aac0a90dce80bf6,
         type: 3}
       propertyPath: m_LocalPosition.x
