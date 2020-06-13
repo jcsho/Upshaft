@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public Text scoreText;
     private float _score;
     private float _scoreTimer;
+    private int coins;
 
     public PlatformSpawner spawner;
 
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour
 
         _score = 0f;
         _scoreTimer = 0f;
+        coins = 0;
     }
 
     private void Update()
@@ -71,6 +73,15 @@ public class PlayerController : MonoBehaviour
         }
 
         scoreText.text = "Score: " + Mathf.Round(_score);
+    }
+    // Every 3 coins the player collects will speed up the game
+    public void CoinCount(){
+        coins ++;
+        IncreaseScore(10);
+        if (coins%3 == 0){
+            spawner.IncreasePlatformSpeed();
+        }
+        
     }
 
     void FixedUpdate()

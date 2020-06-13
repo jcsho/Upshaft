@@ -31,6 +31,7 @@ public class PlatformSpawner : MonoBehaviour
     private float _platformSpawnInterval;
     private int _platformSpawnCounter;
     private int _platformSpeed;
+    private ArrayList pList = new ArrayList();
     
     // Start is called before the first frame update
     void Start()
@@ -46,32 +47,30 @@ public class PlatformSpawner : MonoBehaviour
     void Update()
     {
         _timer += Time.deltaTime;
-        if (_timer >= platformSpawnInterval)
+        if (_timer >= _platformSpawnInterval)
         {
             SpawnPlatform();
             _timer = 0;
         }
-
-        _spawnSpeedTimer += Time.deltaTime;
-        if (_spawnSpeedTimer >= platformRampSpeedRatio)
-        {
-            IncreasePlatformSpeed();
-            _spawnSpeedTimer = 0;
-        }
     }
 
-    private void IncreasePlatformSpeed()
+    public void IncreasePlatformSpeed()
     {
-        if (_platformSpawnInterval >= 0.2f) _platformSpawnInterval *= 0.8f;
+        _platformSpawnInterval *= 0.8f;
         _platformSpeed++;
+        foreach(Platform p in pList){
+            p.SetSpeed(_platformSpeed);
+        }
     }
 
     private void SpawnPlatform()
     {
-        int spawnSpeed = Mathf.RoundToInt(Mathf.Log(_platformSpeed, 2));
+        int spawnSpeed = _platformSpeed;
         Vector2 spawnLocation = new Vector2(Random.Range(spawnPosition.x - spawnPositionTolerance, spawnPosition.x + spawnPositionTolerance), spawnPosition.y);
         Platform platform = Instantiate(platformPrefab, spawnLocation, Quaternion.identity);
+        platform.Initialize(pList);
         platform.SetSpeed(spawnSpeed);
+        pList.Add(platform);
         
         if (_platformSpawnCounter > coinSpawnInterval)
         {
@@ -91,5 +90,48 @@ public class PlatformSpawner : MonoBehaviour
        Vector3 toleranceStart = new Vector3(spawnPosition.x - spawnPositionTolerance, spawnPosition.y, 0);
        Vector3 toleranceEnd = new Vector3(spawnPosition.x + spawnPositionTolerance, spawnPosition.y, 0);
        Gizmos.DrawLine(toleranceStart, toleranceEnd);
+    }
+}
+
+internal struct NewStruct
+{
+    public object Item1;
+    public object Item2;
+
+    public NewStruct(object item1, object item2)
+    {
+        Item1 = item1;
+        Item2 = item2;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is NewStruct other &&
+               EqualityComparer<object>.Default.Equals(Item1, other.Item1) &&
+               EqualityComparer<object>.Default.Equals(Item2, other.Item2);
+    }
+
+    public override int GetHashCode()
+    {
+        int hashCode = -1030903623;
+        hashCode = hashCode * -1521134295 + EqualityComparer<object>.Default.GetHashCode(Item1);
+        hashCode = hashCode * -1521134295 + EqualityComparer<object>.Default.GetHashCode(Item2);
+        return hashCode;
+    }
+
+    public void Deconstruct(out object item1, out object item2)
+    {
+        item1 = Item1;
+        item2 = Item2;
+    }
+
+    public static implicit operator (object, object)(NewStruct value)
+    {
+        return (value.Item1, value.Item2);
+    }
+
+    public static implicit operator NewStruct((object, object) value)
+    {
+        return new NewStruct(value.Item1, value.Item2);
     }
 }
