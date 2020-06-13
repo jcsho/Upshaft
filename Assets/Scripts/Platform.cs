@@ -10,6 +10,11 @@ public class Platform : MonoBehaviour
     private int _moveSpeed;
 
     private Rigidbody2D _rigidBody2D;
+
+    private ArrayList _pList;
+    public Platform(){
+        
+    }
     
     // Start is called before the first frame update
     void Start()
@@ -17,6 +22,9 @@ public class Platform : MonoBehaviour
         _rigidBody2D = GetComponent<Rigidbody2D>();
     }
 
+    public void Initialize(ArrayList pList){
+        _pList = pList;
+    }
 
     private void FixedUpdate()
     {
@@ -26,5 +34,10 @@ public class Platform : MonoBehaviour
     public void SetSpeed(int amount)
     {
         _moveSpeed = amount;
+    }
+    
+    public void Death(){
+        _pList.Remove(this.gameObject);
+        Destroy(gameObject);
     }
 }
