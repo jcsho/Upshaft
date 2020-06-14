@@ -23,14 +23,20 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Layer to check for ground")]
     public LayerMask groundLayer;
 
+    [Tooltip("Time to collect coin before game over")]
+    public int coinCollectInterval;
+
+    public EnemyController boss;
+
     // Scoring Mechanic Variables
     // TODO move into separate UI manager
     public Text coinText;
     public Text scoreText;
+    public Text coinTimerText;
     private float _score;
     private float _scoreTimer;
     private int coins;
-    private int _coinTimer;
+    private float _coinTimer;
 
     public PlatformSpawner spawner;
 
@@ -55,7 +61,7 @@ public class PlayerController : MonoBehaviour
         _score = 0f;
         _scoreTimer = 0f;
         coins = 0;
-        _coinTimer = 0;
+        _coinTimer = coinCollectInterval;
     }
 
     private void Update()
@@ -64,14 +70,35 @@ public class PlayerController : MonoBehaviour
        
        ScoreCounter();
        
+       CoinCounter();
+       
        scoreText.text = "Score: " + Mathf.Round(_score);
        coinText.text = "Coins: " + Mathf.Round(coins);
 
+       if (_coinTimer >= 0)
+       {
+           coinTimerText.text = Mathf.Round(_coinTimer) + " (s)";
+       }
+       else
+       {
+           coinTimerText.text = "0 (s)";
+       }
     }
 
     public void IncreaseScore(int amount)
     {
         _score += amount;
+    }
+
+    private void CoinCounter()
+    {
+        _coinTimer -= Time.deltaTime;
+        if (_coinTimer < 0)
+        {
+            // boss kills player
+            // Debug.Log("Game Over");
+            boss.EndGame();
+        }
     }
 
     private void ScoreCounter()
@@ -85,7 +112,9 @@ public class PlayerController : MonoBehaviour
 
     }
     // Every 3 coins the player collects will speed up the game
-    public void CoinCount(){
+    public void CoinCount()
+    {
+        _coinTimer = coinCollectInterval;
         coins ++;
         IncreaseScore(10);
         if (coins%3 == 0){
