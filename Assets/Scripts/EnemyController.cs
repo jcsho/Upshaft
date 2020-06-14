@@ -27,7 +27,7 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        PhysicsMovement();
+        //PhysicsMovement();
     }
 
     private void PhysicsMovement()
@@ -55,7 +55,7 @@ public class EnemyController : MonoBehaviour
     private IEnumerator FlashSprite(int seconds, float delay)
     {
         Color originalColor = _spriteRenderer.color;
-        Color flashColor = Color.white;
+        Color flashColor = Color.red;
         for (int cycle = 0; cycle < seconds; cycle++)
         {
             _spriteRenderer.color = flashColor;

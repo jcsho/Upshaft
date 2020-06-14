@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3208311690811746086}
   - component: {fileID: 8256918160609398145}
   - component: {fileID: -3515145561446154232}
+  - component: {fileID: 2703769219763486508}
   m_Layer: 10
   m_Name: Boss
   m_TagString: Enemy
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3208311690811746085}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.08, y: -10.16, z: 0}
-  m_LocalScale: {x: 5, y: 7, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -73,8 +74,8 @@ SpriteRenderer:
   m_SortingLayerID: -1895489029
   m_SortingLayer: 2
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: 6e8e13ae25dd897a98297f9d70352c73, type: 3}
-  m_Color: {r: 1, g: 0.509434, b: 0.509434, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 856ed97e74edf3c60b9b00c17008cec6, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -97,9 +98,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.17}
+  m_Offset: {x: 0, y: 0.79}
   serializedVersion: 2
-  m_Radius: 0.3243042
+  m_Radius: 4.55
 --- !u!50 &8256918160609398145
 Rigidbody2D:
   serializedVersion: 4
@@ -135,3 +136,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   movementTolerance: 4.5
+  player: {fileID: 0}
+--- !u!95 &2703769219763486508
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3208311690811746085}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 03f2768d4944a1cd2b2f07574a64193a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
