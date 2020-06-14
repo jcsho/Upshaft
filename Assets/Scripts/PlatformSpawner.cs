@@ -32,6 +32,7 @@ public class PlatformSpawner : MonoBehaviour
     private int _platformSpawnCounter;
     private int _platformSpeed;
     private ArrayList pList = new ArrayList();
+    private bool _spawnPlatforms;
     
     // Start is called before the first frame update
     void Start()
@@ -41,17 +42,26 @@ public class PlatformSpawner : MonoBehaviour
         _platformSpawnInterval = platformSpawnInterval;
         _platformSpawnCounter = 0;
         _platformSpeed = platformStartSpeed;
+        _spawnPlatforms = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        _timer += Time.deltaTime;
-        if (_timer >= _platformSpawnInterval)
+        if (_spawnPlatforms)
         {
-            SpawnPlatform();
-            _timer = 0;
+            _timer += Time.deltaTime;
+            if (_timer >= _platformSpawnInterval)
+            {
+                SpawnPlatform();
+                _timer = 0;
+            }
         }
+    }
+
+    public void SetSpawnerActive(bool state)
+    {
+        _spawnPlatforms = state;
     }
 
     public void IncreasePlatformSpeed()

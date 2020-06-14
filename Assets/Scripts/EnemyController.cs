@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class EnemyController : MonoBehaviour
     public int moveSpeed;
     public float movementTolerance = 2.0f;
     public PlayerController player;
+    public PlatformSpawner spawner;
+    public Text[] gameOverText;
 
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidBody2D;
@@ -25,11 +28,13 @@ public class EnemyController : MonoBehaviour
         _direction = 1;
     }
 
-    private void FixedUpdate()
+    void Update()
     {
-        //PhysicsMovement();
+        if (!player.gameObject.activeSelf && Input.GetKeyDown("space"))
+        {
+            SceneManager.LoadScene("MenuScene");
+        }
     }
-
     private void PhysicsMovement()
     {
         if (Math.Abs(_rigidBody2D.position.x) > (_initialPosition.x + movementTolerance))
@@ -48,7 +53,12 @@ public class EnemyController : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene("MenuScene");
+            other.gameObject.SetActive(false);
+            spawner.SetSpawnerActive(false);
+            foreach (Text text in gameOverText)
+            {
+                text.gameObject.SetActive(true);
+            }
         }
     }
 
