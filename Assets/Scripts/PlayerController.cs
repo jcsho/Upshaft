@@ -32,18 +32,22 @@ public class PlayerController : MonoBehaviour
 
     public PlatformSpawner spawner;
 
+    private Animator _animator;
     private Rigidbody2D _rigidBody2D;
     private float _moveInput;
     private bool _isJumping;
     private bool _canDoubleJump;
+    private bool _isFacingRight;
     private Weapon _weapon;
 
     // Start is called before the first frame update
     void Start()
     {
+        _animator = GetComponent<Animator>();
         _rigidBody2D = GetComponent<Rigidbody2D>();
         _isJumping = false;
         _canDoubleJump = false;
+        _isFacingRight = true;
         _weapon = GetComponent<Weapon>();
 
         _score = 0f;
@@ -99,6 +103,8 @@ public class PlayerController : MonoBehaviour
     {
         _moveInput = Input.GetAxis("Horizontal");
         
+        _animator.SetFloat("Speed", Mathf.Abs(_moveInput));
+
         if (!_isJumping && Input.GetButtonDown("Jump"))
         {
             Jump(jumpForce);
@@ -110,6 +116,8 @@ public class PlayerController : MonoBehaviour
             _canDoubleJump = false;
             FireWeapon();
         }
+
+        _animator.SetBool("IsJumping", _isJumping);
     }
 
     private void PhysicsMovement()
@@ -121,12 +129,28 @@ public class PlayerController : MonoBehaviour
         // TODO - use circle cast to cover entire bottom area of character
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, tolerance, groundLayer);
         _isJumping = hit.collider == null;
+        
+        if (_moveInput > 0 && !_isFacingRight)
+        {
+            Flip();
+        }
+        else if (_moveInput < 0 && _isFacingRight)
+        {
+            Flip();
+        }
     }
 
     private void Jump(float jumpAmount)
     {
         _rigidBody2D.velocity = new Vector2(_rigidBody2D.velocity.x, 0);
         _rigidBody2D.AddForce(Vector2.up * jumpAmount);
+    }
+
+    private void Flip()
+    {
+        // Flip the direction the player is facing
+        _isFacingRight = !_isFacingRight;
+        transform.Rotate(0f, 180f, 0f);
     }
 
     private void OnDrawGizmosSelected()
