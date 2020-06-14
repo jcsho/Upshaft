@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
 
     // Scoring Mechanic Variables
     // TODO move into separate UI manager
+    public Text coinText;
     public Text scoreText;
     private float _score;
     private float _scoreTimer;
@@ -60,6 +61,10 @@ public class PlayerController : MonoBehaviour
        Movement(); 
        
        ScoreCounter();
+       
+       scoreText.text = "Score: " + Mathf.Round(_score);
+       coinText.text = "Coins: " + Mathf.Round(coins);
+
     }
 
     public void IncreaseScore(int amount)
@@ -76,7 +81,6 @@ public class PlayerController : MonoBehaviour
             _scoreTimer = 0;
         }
 
-        scoreText.text = "Score: " + Mathf.Round(_score);
     }
     // Every 3 coins the player collects will speed up the game
     public void CoinCount(){
