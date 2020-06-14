@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private float _score;
     private float _scoreTimer;
     private int coins;
+    private int _coinTimer;
 
     public PlatformSpawner spawner;
 
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour
         _score = 0f;
         _scoreTimer = 0f;
         coins = 0;
+        _coinTimer = 0;
     }
 
     private void Update()
