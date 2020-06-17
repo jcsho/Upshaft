@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 public class ButtonManager : MonoBehaviour
 {
 
-    public void StartGame()
-    {
-       SceneManager.LoadScene("TutorialScene"); 
-    }
+  public void ChangeGameState(string state) => GameState.GameMode = state;
+
+  public void TransitionToScene(string sceneName) => SceneManager.LoadScene(sceneName);
 }
