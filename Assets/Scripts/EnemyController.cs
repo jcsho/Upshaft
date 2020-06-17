@@ -20,6 +20,18 @@ public class EnemyController : MonoBehaviour
     private Vector2 _initialPosition;
     private int _speed;
 
+    void Awake()
+    {
+        if (GameState.GameMode == "easy")
+        {
+            gameObject.SetActive(false);
+        }
+        else if (GameState.GameMode == "normal" || GameState.GameMode == "hard")
+        {
+            gameObject.SetActive(true);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,14 +41,7 @@ public class EnemyController : MonoBehaviour
         _direction = 1;
         _speed = 0;
     }
-
-    void Update()
-    {
-        if (!player.gameObject.activeSelf && Input.GetKeyDown("space"))
-        {
-            SceneManager.LoadScene("MenuScene");
-        }
-    }
+    
 
     private void FixedUpdate()
     {

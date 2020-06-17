@@ -48,6 +48,20 @@ public class PlayerController : MonoBehaviour
     private bool _isFacingRight;
     private Weapon _weapon;
 
+    private void Awake()
+    {
+        if (GameState.GameMode == "easy")
+        {
+            coinText.gameObject.SetActive(false);
+            coinTimerText.gameObject.SetActive(false);
+        }
+        else if (GameState.GameMode == "normal" || GameState.GameMode == "hard")
+        {
+            coinText.gameObject.SetActive(true);
+            coinTimerText.gameObject.SetActive(true);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,19 +83,22 @@ public class PlayerController : MonoBehaviour
        Movement(); 
        
        ScoreCounter();
-       
-       CoinCounter();
-       
        scoreText.text = "Score: " + Mathf.Round(_score);
-       coinText.text = "Coins: " + Mathf.Round(coins);
 
-       if (_coinTimer >= 0)
+       if (GameState.GameMode == "normal" || GameState.GameMode == "hard")
        {
-           coinTimerText.text = Mathf.Round(_coinTimer) + " (s)";
-       }
-       else
-       {
-           coinTimerText.text = "0 (s)";
+           CoinCounter();
+
+           coinText.text = "Coins: " + Mathf.Round(coins);
+
+           if (_coinTimer >= 0)
+           {
+               coinTimerText.text = Mathf.Round(_coinTimer) + " (s)";
+           }
+           else
+           {
+               coinTimerText.text = "0 (s)";
+           }
        }
     }
 

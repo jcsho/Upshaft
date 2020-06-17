@@ -1102,6 +1102,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b7ed1397738f38b86765b8c06b10fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1751990906}
+  spawner: {fileID: 1497798487}
+  gameOverText:
+  - {fileID: 1632639599}
+  - {fileID: 1439371899}
 --- !u!61 &1743419759
 BoxCollider2D:
   m_ObjectHideFlags: 0
