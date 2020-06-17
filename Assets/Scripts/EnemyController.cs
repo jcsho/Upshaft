@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -10,11 +11,14 @@ public class EnemyController : MonoBehaviour
     public int moveSpeed;
     public float movementTolerance = 2.0f;
     public PlayerController player;
+    public PlatformSpawner spawner;
+    public Text[] gameOverText;
 
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidBody2D;
     private int _direction;
     private Vector2 _initialPosition;
+    private int _speed;
 
     // Start is called before the first frame update
     void Start()
@@ -23,19 +27,31 @@ public class EnemyController : MonoBehaviour
         _initialPosition = transform.position;
         _rigidBody2D = GetComponent<Rigidbody2D>();
         _direction = 1;
+        _speed = 0;
+    }
+
+    void Update()
+    {
+        if (!player.gameObject.activeSelf && Input.GetKeyDown("space"))
+        {
+            SceneManager.LoadScene("MenuScene");
+        }
     }
 
     private void FixedUpdate()
     {
-        PhysicsMovement();
+       PhysicsMovement(); 
     }
 
+    public void EndGame()
+    {
+        _speed = moveSpeed;
+    }
+    
     private void PhysicsMovement()
     {
-        if (Math.Abs(_rigidBody2D.position.x) > (_initialPosition.x + movementTolerance))
-            _direction = -_direction;
-        
-        _rigidBody2D.velocity = new Vector2(_direction * moveSpeed, _rigidBody2D.velocity.y);
+        if (_speed > 0)
+            _rigidBody2D.velocity = new Vector2(0f, _direction * moveSpeed);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -48,14 +64,19 @@ public class EnemyController : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene("MenuScene");
+            other.gameObject.SetActive(false);
+            spawner.SetSpawnerActive(false);
+            foreach (Text text in gameOverText)
+            {
+                text.gameObject.SetActive(true);
+            }
         }
     }
 
     private IEnumerator FlashSprite(int seconds, float delay)
     {
         Color originalColor = _spriteRenderer.color;
-        Color flashColor = Color.white;
+        Color flashColor = Color.red;
         for (int cycle = 0; cycle < seconds; cycle++)
         {
             _spriteRenderer.color = flashColor;

@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 2243006571890683388}
   - component: {fileID: 2243006571890683386}
   - component: {fileID: 9212005784039874402}
+  - component: {fileID: 3695175233490238800}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -181,6 +182,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 2048
+  coinText: {fileID: 0}
+  scoreText: {fileID: 0}
+  spawner: {fileID: 0}
 --- !u!114 &9212005784039874402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,3 +200,22 @@ MonoBehaviour:
   firePoint: {fileID: 6810214846465720619}
   bulletPrefab: {fileID: 9064655353371115412, guid: 38ccbc67cd7bda92d917496787c02caa,
     type: 3}
+--- !u!95 &3695175233490238800
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2243006571890683377}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e09efbf924551c53eaa9271f0fb812f7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
