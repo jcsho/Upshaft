@@ -12,11 +12,16 @@ public class PlatformSpawner : MonoBehaviour
 
     public Coin coinPrefab;
 
+    public FallingRock rockPrefab;
+
     public Vector2 spawnPosition;
 
     public float spawnPositionTolerance;
     
     public int platformStartSpeed;
+
+    public int rockStartSpeed;
+    
     [Tooltip("Amount of time per speed increase")]
     public int platformRampSpeedRatio;
 
@@ -26,6 +31,11 @@ public class PlatformSpawner : MonoBehaviour
     [Tooltip("Amount of platforms per coin spawn (in platforms)")]
     public int coinSpawnInterval;
 
+    public float rockSpawnInterval;
+
+    private float _rockSpawnTimer;
+    private float _rockSpawnInterval;
+    private int _rockSpeed;
     private float _timer;
     private float _spawnSpeedTimer;
     private float _platformSpawnInterval;
@@ -37,6 +47,9 @@ public class PlatformSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _rockSpawnTimer = 0f;
+        _rockSpawnInterval = rockSpawnInterval;
+        _rockSpeed = rockStartSpeed;
         _timer = 0f;
         _spawnSpeedTimer = 0f;
         _platformSpawnInterval = platformSpawnInterval;
@@ -55,6 +68,16 @@ public class PlatformSpawner : MonoBehaviour
             {
                 SpawnPlatform();
                 _timer = 0;
+            }
+        }
+
+        if (GameState.GameMode == "hard")
+        {
+            _rockSpawnTimer += Time.deltaTime;
+            if (_rockSpawnTimer >= _rockSpawnInterval)
+            {
+                SpawnRocks();
+                _rockSpawnTimer = 0;
             }
         }
     }
@@ -87,6 +110,20 @@ public class PlatformSpawner : MonoBehaviour
             SpawnCoin(spawnLocation, spawnSpeed);
         }
         
+    }
+
+    public void IncreaseRockSpeed()
+    {
+        _rockSpeed++;
+        _rockSpawnInterval *= 0.8f;
+    }
+
+    private void SpawnRocks()
+    {
+        int spawnSpeed = _rockSpeed;
+        Vector2 spawnLocation = new Vector2(Random.Range(spawnPosition.x - spawnPositionTolerance, spawnPosition.x + spawnPositionTolerance), spawnPosition.y);
+        FallingRock rock = Instantiate(rockPrefab, spawnLocation, Quaternion.identity);
+        rock.SetSpeed(spawnSpeed);
     }
 
     private void SpawnCoin(Vector2 location, int speed)

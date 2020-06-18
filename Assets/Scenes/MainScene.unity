@@ -767,12 +767,16 @@ MonoBehaviour:
     type: 3}
   coinPrefab: {fileID: 4967581631343417129, guid: 238044dffbdc7845dac8da30c1dd1d3d,
     type: 3}
+  rockPrefab: {fileID: 1111165854672649118, guid: cccefde7728dd0e18a59c8ef7ab5bd3b,
+    type: 3}
   spawnPosition: {x: 0, y: 10}
   spawnPositionTolerance: 4
   platformStartSpeed: 2
+  rockStartSpeed: 2
   platformRampSpeedRatio: 8
   platformSpawnInterval: 2
   coinSpawnInterval: 2
+  rockSpawnInterval: 15
 --- !u!4 &1497798488
 Transform:
   m_ObjectHideFlags: 0

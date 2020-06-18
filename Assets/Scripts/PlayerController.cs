@@ -144,6 +144,11 @@ public class PlayerController : MonoBehaviour
         IncreaseScore(10);
         if (coins%3 == 0){
             spawner.IncreasePlatformSpeed();
+
+            if (GameState.GameMode == "hard")
+            {
+                spawner.IncreaseRockSpeed();
+            }
         }
         
     }
@@ -151,6 +156,11 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         PhysicsMovement();
+    }
+
+    public void HitByRock(Vector2 direction, float force)
+    {
+       _rigidBody2D.AddForce(direction * force); 
     }
 
     private void FireWeapon()
