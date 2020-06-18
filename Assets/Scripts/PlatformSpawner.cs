@@ -81,12 +81,21 @@ public class PlatformSpawner : MonoBehaviour
         platform.Initialize(pList);
         platform.SetSpeed(spawnSpeed);
         pList.Add(platform);
+
+        if (GameState.GameMode == "normal" || GameState.GameMode == "hard")
+        {
+            SpawnCoin(spawnLocation, spawnSpeed);
+        }
         
+    }
+
+    private void SpawnCoin(Vector2 location, int speed)
+    {
         if (_platformSpawnCounter > coinSpawnInterval)
         {
-            spawnLocation.y = spawnPosition.y + 1;
-            Coin coin = Instantiate(coinPrefab, spawnLocation, Quaternion.identity);
-            coin.SetSpeed(spawnSpeed);
+            location.y = spawnPosition.y + 1;
+            Coin coin = Instantiate(coinPrefab, location, Quaternion.identity);
+            coin.SetSpeed(speed);
             _platformSpawnCounter = 0;
         }
         
