@@ -84,8 +84,10 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {   
        if (_state == 1){
+           _animator.SetBool("RocketBoot", true);
            jumpForce = 600;
        }else{
+           _animator.SetBool("RocketBoot", false);
            jumpForce = 400;
        }
        Movement(); 
