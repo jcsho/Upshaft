@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour
 
     public EnemyController boss;
 
+    public GameObject gunHorizontal;
+
+    public GameObject gunVertical;
+
     // Scoring Mechanic Variables
     // TODO move into separate UI manager
     public Text coinText;
@@ -188,7 +192,11 @@ public class PlayerController : MonoBehaviour
             _canDoubleJump = false;
             if (_state == 2)
             {
-            FireWeapon();
+                gunHorizontal.SetActive(false);
+                gunVertical.SetActive(true);
+                FireWeapon();
+                gunVertical.SetActive(false);
+                gunHorizontal.SetActive(true);
             }
         }
 
