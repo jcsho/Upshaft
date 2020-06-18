@@ -14,6 +14,10 @@ public class PlatformSpawner : MonoBehaviour
 
     public FallingRock rockPrefab;
 
+    public PowerUp gunPrefab;
+
+    public PowerUp bootsPrefab;
+
     public Vector2 spawnPosition;
 
     public float spawnPositionTolerance;
@@ -30,6 +34,8 @@ public class PlatformSpawner : MonoBehaviour
    
     [Tooltip("Amount of platforms per coin spawn (in platforms)")]
     public int coinSpawnInterval;
+
+    public int powerSpawnInterval;
 
     public float rockSpawnInterval;
 
@@ -105,10 +111,17 @@ public class PlatformSpawner : MonoBehaviour
         platform.SetSpeed(spawnSpeed);
         pList.Add(platform);
 
+
+        if (GameState.GameMode == "easy")
+        {
+            SpawnPowerUp(spawnLocation,spawnSpeed);
+        }
         if (GameState.GameMode == "normal" || GameState.GameMode == "hard")
         {
             SpawnCoin(spawnLocation, spawnSpeed);
         }
+
+        
         
     }
 
@@ -137,6 +150,28 @@ public class PlatformSpawner : MonoBehaviour
         }
         
         _platformSpawnCounter++;
+    }
+
+    private void SpawnPowerUp(Vector2 location, int speed)
+    {
+        if(_platformSpawnCounter > powerSpawnInterval)
+        {
+           Debug.Log("Spawning powerup"); 
+           int i = Random.Range(0,3);
+           location.y = spawnPosition.y +1;
+           if (i<2){
+                PowerUp p = Instantiate(bootsPrefab,location,Quaternion.identity);
+                p.setType(1);
+                p.SetSpeed(speed);
+           }else if (i==2){
+                PowerUp p = Instantiate(gunPrefab,location,Quaternion.identity);
+                p.setType(2);
+                p.SetSpeed(speed);
+           }
+           
+           _platformSpawnCounter = 0; 
+        }
+        _platformSpawnCounter ++;
     }
 
     private void OnDrawGizmosSelected()

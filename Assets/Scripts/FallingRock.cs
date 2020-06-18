@@ -31,7 +31,7 @@ public class FallingRock : MonoBehaviour
         {
             Vector2 direction = (other.transform.position - transform.position).normalized;
             PlayerController player = other.GetComponent<PlayerController>();
-            player.HitByRock(direction, impactForce);
+            //player.HitByRock(direction, impactForce);
         }
     }
 }

@@ -38,6 +38,10 @@ public class PlayerController : MonoBehaviour
     private int coins;
     private float _coinTimer;
 
+    
+
+    private int _stateTimer;
+
     public PlatformSpawner spawner;
 
     private Animator _animator;
@@ -47,6 +51,7 @@ public class PlayerController : MonoBehaviour
     private bool _canDoubleJump;
     private bool _isFacingRight;
     private Weapon _weapon;
+    private bool _hasGun;
 
     private int _state; //Powerup state, starts at 0
                         //1 for boots, 2 for gun right now
@@ -77,19 +82,22 @@ public class PlayerController : MonoBehaviour
         _state = 0;
         _score = 0f;
         _scoreTimer = 0f;
+        _stateTimer = 0;
         coins = 0;
         _coinTimer = coinCollectInterval;
+        _hasGun = false;
     }
 
     private void Update()
     {   
-       if (_state == 1){
+       if (_state == 1){ // rocket boots power up
            jumpForce = 600;
        }else{
            jumpForce = 400;
        }
+
        Movement(); 
-       
+       StateCounter();
        ScoreCounter();
        scoreText.text = "Score: " + Mathf.Round(_score);
 
@@ -126,6 +134,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void StateCounter()
+    {
+        if (_stateTimer >0){
+            _stateTimer --;
+            if(_stateTimer<= 0){
+                _state = 0;
+            }
+        }
+    }
+
     private void ScoreCounter()
     {
         _scoreTimer += Time.deltaTime;
@@ -144,13 +162,20 @@ public class PlayerController : MonoBehaviour
         IncreaseScore(10);
         if (coins%3 == 0){
             spawner.IncreasePlatformSpeed();
-
-            if (GameState.GameMode == "hard")
-            {
-                spawner.IncreaseRockSpeed();
-            }
         }
         
+    }
+
+    public void GainPower(int pow)
+    {
+        Debug.Log("Collected Powerup");
+        if (pow == 1){
+        _state = 1;
+        }
+        if (pow == 2){
+            _hasGun = true;
+        }
+        _stateTimer = 300;
     }
 
     void FixedUpdate()
@@ -158,15 +183,12 @@ public class PlayerController : MonoBehaviour
         PhysicsMovement();
     }
 
-    public void HitByRock(Vector2 direction, float force)
-    {
-       _rigidBody2D.AddForce(direction * force); 
-    }
-
     private void FireWeapon()
     {
         // check if weapon powerup enabled
+        if (_hasGun == true){
         _weapon.Shoot();
+        }
     }
 
     private void Movement()
@@ -184,10 +206,7 @@ public class PlayerController : MonoBehaviour
         {
             Jump(jumpForce * 0.85f);
             _canDoubleJump = false;
-            if (_state == 2)
-            {
             FireWeapon();
-            }
         }
 
         _animator.SetBool("IsJumping", _isJumping);
