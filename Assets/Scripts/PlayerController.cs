@@ -48,6 +48,9 @@ public class PlayerController : MonoBehaviour
     private bool _isFacingRight;
     private Weapon _weapon;
 
+    private int _state; //Powerup state, starts at 0
+                        //1 for boots, 2 for gun right now
+
     private void Awake()
     {
         if (GameState.GameMode == "easy")
@@ -71,7 +74,7 @@ public class PlayerController : MonoBehaviour
         _canDoubleJump = false;
         _isFacingRight = true;
         _weapon = GetComponent<Weapon>();
-
+        _state = 0;
         _score = 0f;
         _scoreTimer = 0f;
         coins = 0;
@@ -79,7 +82,12 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Update()
-    {
+    {   
+       if (_state == 1){
+           jumpForce = 600;
+       }else{
+           jumpForce = 400;
+       }
        Movement(); 
        
        ScoreCounter();
@@ -166,7 +174,10 @@ public class PlayerController : MonoBehaviour
         {
             Jump(jumpForce * 0.85f);
             _canDoubleJump = false;
+            if (_state == 2)
+            {
             FireWeapon();
+            }
         }
 
         _animator.SetBool("IsJumping", _isJumping);
