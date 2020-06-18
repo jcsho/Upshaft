@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: -6859547380796452302}
   - component: {fileID: 5551978321355215339}
   - component: {fileID: -2584535446154912919}
-  - component: {fileID: -2125940935789517979}
   m_Layer: 10
   m_Name: Gun
   m_TagString: PowerUp
@@ -30,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7766431460671329353}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -112,7 +111,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.85
 --- !u!50 &-2584535446154912919
 Rigidbody2D:
   serializedVersion: 4
@@ -133,30 +132,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!61 &-2125940935789517979
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7766431460671329353}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 17.25, y: 17.93}
-    newSize: {x: 17.25, y: 17.93}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 17.25, y: 17.93}
-  m_EdgeRadius: 0
+  m_Constraints: 4

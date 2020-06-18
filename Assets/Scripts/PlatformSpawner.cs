@@ -8,6 +8,8 @@ using Random = UnityEngine.Random;
 public class PlatformSpawner : MonoBehaviour
 {
 
+    public PlayerController player;
+
     public Platform platformPrefab;
 
     public Coin coinPrefab;
@@ -112,13 +114,10 @@ public class PlatformSpawner : MonoBehaviour
         pList.Add(platform);
 
 
-        if (GameState.GameMode == "easy")
-        {
-            SpawnPowerUp(spawnLocation,spawnSpeed);
-        }
         if (GameState.GameMode == "normal" || GameState.GameMode == "hard")
         {
             SpawnCoin(spawnLocation, spawnSpeed);
+            SpawnPowerUp(spawnLocation,spawnSpeed);
         }
 
         
@@ -158,12 +157,12 @@ public class PlatformSpawner : MonoBehaviour
         {
            Debug.Log("Spawning powerup"); 
            int i = Random.Range(0,3);
-           location.y = spawnPosition.y +1;
-           if (i<2){
+           location.y = spawnPosition.y + 1.5f;
+           if (i<2 && !player.HasRocketBoots()){
                 PowerUp p = Instantiate(bootsPrefab,location,Quaternion.identity);
                 p.setType(1);
                 p.SetSpeed(speed);
-           }else if (i==2){
+           }else if (i==2 && !player.HasGun()){
                 PowerUp p = Instantiate(gunPrefab,location,Quaternion.identity);
                 p.setType(2);
                 p.SetSpeed(speed);

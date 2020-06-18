@@ -94,13 +94,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {   
-<<<<<<< HEAD
-       if (_state == 1){ // rocket boots power up
-=======
        if (_state == 1){
            _animator.SetBool("RocketBoot", true);
->>>>>>> 652f489982d583fb5525cf02aea66987b59ad52b
-           jumpForce = 600;
+           jumpForce = 475;
        }else{
            _animator.SetBool("RocketBoot", false);
            jumpForce = 400;
@@ -126,6 +122,16 @@ public class PlayerController : MonoBehaviour
                coinTimerText.text = "0 (s)";
            }
        }
+    }
+
+    public bool HasGun()
+    {
+        return _hasGun;
+    }
+
+    public bool HasRocketBoots()
+    {
+        return _state == 1;
     }
 
     public void IncreaseScore(int amount)
@@ -180,9 +186,10 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Collected Powerup");
         if (pow == 1){
-        _state = 1;
+            _state = 1;
         }
         if (pow == 2){
+            gunHorizontal.SetActive(true);
             _hasGun = true;
         }
         _stateTimer = 300;
@@ -197,7 +204,7 @@ public class PlayerController : MonoBehaviour
     {
         // check if weapon powerup enabled
         if (_hasGun == true){
-        _weapon.Shoot();
+            _weapon.Shoot();
         }
     }
 
@@ -216,18 +223,15 @@ public class PlayerController : MonoBehaviour
         {
             Jump(jumpForce * 0.85f);
             _canDoubleJump = false;
-<<<<<<< HEAD
-            FireWeapon();
-=======
-            if (_state == 2)
+            if (_hasGun)
             {
+                _animator.SetBool("isDoubleJump", true);
                 gunHorizontal.SetActive(false);
                 gunVertical.SetActive(true);
                 FireWeapon();
                 gunVertical.SetActive(false);
                 gunHorizontal.SetActive(true);
             }
->>>>>>> 652f489982d583fb5525cf02aea66987b59ad52b
         }
 
         _animator.SetBool("IsJumping", _isJumping);

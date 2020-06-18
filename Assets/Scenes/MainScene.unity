@@ -121,6 +121,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &423693224 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2908770765824805747, guid: 1a42c497651eebeb5aac0a90dce80bf6,
+    type: 3}
+  m_PrefabInstance: {fileID: 2243006572087182182}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &467688067
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,6 +504,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e4cfb3323e44fea5974861d80eeabfe, type: 3}
+--- !u!1 &1149571395 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 250427760485048022, guid: 1a42c497651eebeb5aac0a90dce80bf6,
+    type: 3}
+  m_PrefabInstance: {fileID: 2243006572087182182}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1188907712
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,14 +775,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4948c1a4ce3ea99c486359c8820c8c82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1751990906}
   platformPrefab: {fileID: 5602217502430966303, guid: 0e4cfb3323e44fea5974861d80eeabfe,
     type: 3}
   coinPrefab: {fileID: 4967581631343417129, guid: 238044dffbdc7845dac8da30c1dd1d3d,
     type: 3}
   rockPrefab: {fileID: 1111165854672649118, guid: cccefde7728dd0e18a59c8ef7ab5bd3b,
     type: 3}
-  gunPrefab: {fileID: 0}
-  bootsPrefab: {fileID: 0}
+  gunPrefab: {fileID: -6859547380796452302, guid: 61f4a214612757c46b6da3847da1ffe2,
+    type: 3}
+  bootsPrefab: {fileID: 3526905512593570530, guid: e23e58fae6c1d404ea204cabef78ef22,
+    type: 3}
   spawnPosition: {x: 0, y: 10}
   spawnPositionTolerance: 4
   platformStartSpeed: 2
@@ -778,7 +793,7 @@ MonoBehaviour:
   platformRampSpeedRatio: 8
   platformSpawnInterval: 2
   coinSpawnInterval: 2
-  powerSpawnInterval: 2
+  powerSpawnInterval: 15
   rockSpawnInterval: 15
 --- !u!4 &1497798488
 Transform:
@@ -1356,6 +1371,16 @@ PrefabInstance:
       propertyPath: boss
       value: 
       objectReference: {fileID: 786270579}
+    - target: {fileID: 2243006571890683386, guid: 1a42c497651eebeb5aac0a90dce80bf6,
+        type: 3}
+      propertyPath: gunHorizontal
+      value: 
+      objectReference: {fileID: 423693224}
+    - target: {fileID: 2243006571890683386, guid: 1a42c497651eebeb5aac0a90dce80bf6,
+        type: 3}
+      propertyPath: gunVertical
+      value: 
+      objectReference: {fileID: 1149571395}
     - target: {fileID: 2243006571890683389, guid: 1a42c497651eebeb5aac0a90dce80bf6,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
@@ -1562,7 +1587,7 @@ PrefabInstance:
     - target: {fileID: 5602217502430966303, guid: 0e4cfb3323e44fea5974861d80eeabfe,
         type: 3}
       propertyPath: _moveSpeed
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5602217502430966304, guid: 0e4cfb3323e44fea5974861d80eeabfe,
         type: 3}
