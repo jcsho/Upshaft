@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour
 
     public EnemyController boss;
 
+    public GameObject gunHorizontal;
+
+    public GameObject gunVertical;
+
     // Scoring Mechanic Variables
     // TODO move into separate UI manager
     public Text coinText;
@@ -90,9 +94,15 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {   
+<<<<<<< HEAD
        if (_state == 1){ // rocket boots power up
+=======
+       if (_state == 1){
+           _animator.SetBool("RocketBoot", true);
+>>>>>>> 652f489982d583fb5525cf02aea66987b59ad52b
            jumpForce = 600;
        }else{
+           _animator.SetBool("RocketBoot", false);
            jumpForce = 400;
        }
 
@@ -206,7 +216,18 @@ public class PlayerController : MonoBehaviour
         {
             Jump(jumpForce * 0.85f);
             _canDoubleJump = false;
+<<<<<<< HEAD
             FireWeapon();
+=======
+            if (_state == 2)
+            {
+                gunHorizontal.SetActive(false);
+                gunVertical.SetActive(true);
+                FireWeapon();
+                gunVertical.SetActive(false);
+                gunHorizontal.SetActive(true);
+            }
+>>>>>>> 652f489982d583fb5525cf02aea66987b59ad52b
         }
 
         _animator.SetBool("IsJumping", _isJumping);
